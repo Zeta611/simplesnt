@@ -1,0 +1,116 @@
+\documentclass{simplesnt}
+
+%% Helpful packages
+\usepackage{simplebnf}[2022/05/08]
+\RenewDocumentCommand{\SimpleBNFDefEq}{}{\ensuremath{⩴}}
+
+\usepackage{tabularray}
+\UseTblrLibrary{booktabs}
+
+\usepackage{metalogo} % For XeTeX logo
+\usepackage{kotex-logo}
+
+\newcommand*{\presentfont}[1]{{\fontspec{#1}#1}}
+
+\title{\texttt{simpleSnT}}
+\subtitle{A simple package to create show and tell slides}
+\author{Jay Lee}
+
+\begin{document}
+\maketitle
+
+\begin{frame}
+  \frametitle{목차}
+  \tableofcontents
+\end{frame}
+
+\section{Prerequisites}
+
+\begin{frame}[c]
+  \frametitle{\TeX\ Engine}
+
+  You are expected to use \XeLaTeX\ to use this class.\footnote{Tectonic is supported as well.}
+  Use of other engines is not officially supported.
+
+  \koTeX\ encourages the use of modern \TeX\ engines, and \XeLaTeX\ is considered the de-facto standard for Korean \TeX\ users.\footnote{http://wiki.ktug.org/wiki/wiki.php/ModernLaTeX}
+\end{frame}
+
+
+\begin{frame}[c]
+  \frametitle{Fonts}
+  Basically, the following fonts are required:
+  {\footnotesize
+  \begin{itemize}
+    \item \presentfont{Noto Serif CJK KR},
+    \item {\fontspec{KoPubWorldDotum_Pro}KoPubWorldDotum\_Pro},
+    \item \presentfont{D2Coding},
+    \item \presentfont{Libertinus Serif},
+    \item \presentfont{Libertinus Sans},
+    \item \presentfont{JuliaMono},
+    \item \presentfont{Libertinus Math},
+    \item \presentfont{TeX Gyre Pagella Math}, and
+    \item \presentfont{Asana Math}.
+  \end{itemize}
+  }
+  You probably have most of them installed already with your local \TeX\ distribution.
+  However, if you pass \texttt{no-fonts} option to the class, i.e., \texttt{\textbackslash documentclass[no-fonts]\{simplesnt\}}, the class will not load any fonts.
+\end{frame}
+
+
+\begin{frame}[c, fragile]
+  \frametitle{Usage}
+
+  Use \XeLaTeX:
+\begin{verbatim}
+# Run at least three times to get all the cross references correct
+xelatex doc.tex
+xelatex doc.tex
+xelatex doc.tex
+\end{verbatim}
+
+  The above is just an example; You are free to use other build tools based on \texttt{latexmk}, GNU Make, Tectonic, etc.
+\end{frame}
+
+
+\section{(Opinionated) Examples}
+
+\begin{frame}[c, fragile]
+  \frametitle{Backus-Naur Forms}
+
+  Use \texttt{simplebnf}, e.g.,
+\begin{verbatim}
+\usepackage{simplebnf}[2022/05/08]
+\RenewDocumentCommand{\SimpleBNFDefEq}{}{\ensuremath{⩴}}
+\end{verbatim}
+
+  \begin{bnfgrammar}[rrclr]
+    $e$ : Expression ::=
+      $n$ : number
+    | $x$ : variable
+    | $e$; $e$ : sequence
+    | $e \oplus e$ : binary op
+    | $e\ e$ : application
+  \end{bnfgrammar}
+\end{frame}
+
+\begin{frame}[c, fragile]
+  \frametitle{Tables}
+
+  Use \texttt{tabularray}, e.g.,
+\begin{verbatim}
+\usepackage{tabularray}
+\UseTblrLibrary{booktabs}
+\end{verbatim}
+
+  \begin{center}
+    \begin{tblr}{ccc}
+      \toprule
+      A & B & C \\
+      \midrule
+      1 & 2 & 3 \\
+      4 & 5 & 6 \\
+      \bottomrule
+    \end{tblr}
+  \end{center}
+\end{frame}
+\end{document}
