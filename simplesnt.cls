@@ -35,9 +35,9 @@
 \useoutertheme[subsection=false]{miniframes}
 \usecolortheme{rose}
 
-\setbeamertemplate{itemize item}[square]
-\setbeamertemplate{itemize subitem}[triangle]
-\setbeamertemplate{itemize subsubitem}[circle]
+\setbeamertemplate{itemize~item}[square]
+\setbeamertemplate{itemize~subitem}[triangle]
+\setbeamertemplate{itemize~subsubitem}[circle]
 
 \setbeamercolor{background~canvas}{bg=white}
 
