@@ -25,12 +25,13 @@
 
 \RequirePackage{kotex}
 
-%%% Math settings
-\usepackage{amssymb, amsmath} % Before unicode-math
-\usepackage[math-style=TeX, bold-style=TeX]{unicode-math}
+% Math settings (before unicode-math)
+\RequirePackage{amssymb, amsmath, mathtools}
 
 
-%%% Beamer settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Beamer setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usetheme[numbering=fraction, progressbar=frametitle]{metropolis}
 \useoutertheme[subsection=false]{miniframes}
 \usecolortheme{rose}
@@ -53,79 +54,48 @@
 }
 
 
-%%% Font settings
-\bool_if:NF \l_simplesnt_no_fonts_bool
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Font setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Works for pdfLaTeX, XeLaTeX, and LuaLaTeX
+\RequirePackage{libertine}
+
+% Math/Mono font setup
+\bool_if:nTF { \sys_if_engine_xetex_p: || \sys_if_engine_luatex_p: }
   {
-    \setmainfont{LibertinusSerif}[
-      UprightFont = *-Regular,
-      BoldFont = *-Bold,
-      ItalicFont = *-Italic,
-      BoldItalicFont = *-BoldItalic,
-    ]
-    \setsansfont{LibertinusSans}[
-      UprightFont = *-Regular,
-      BoldFont = *-Bold,
-      ItalicFont = *-Italic,
-    ]
-    \setmonofont{JuliaMono}[
-      Scale = MatchLowercase,
-      UprightFont = *-Regular,
-      BoldFont = *-Bold,
-      ItalicFont = *-RegularItalic,
-      BoldItalicFont = *-BoldItalic,
+    \RequirePackage[
+      math-style=ISO,
+      warnings-off={mathtools-colon, mathtools-overbracket},
+    ]{unicode-math}
+    \setmathfont{LibertinusMath-Regular.otf}[Scale = MatchUppercase]
+    \setmathfont{Garamond-Math.otf}[
+      Scale = MatchUppercase,
+      range = {\Coloneq}
     ]
 
-    \setmathfont{Libertinus~Math} % Before set*hangulfont
-    \setmathfont{TeX~Gyre~Pagella~Math}[range={\lbrace,\rbrace},Scale=1.1]
-    \setmathfont{TeX~Gyre~Pagella~Math}[range={\mathbb,\mathfrak},Scale=MatchUppercase]
-    \setmathfont{Asana~Math}[range={\checkmark,\bigtriangledown,\cup,\sqcup,\cap,\sqcap,\subseteq,\supseteq,\sqsubseteq,\sqsupseteq,\subset,\supset,\sqsubset,\sqsupset,\in,\ni,\notin},Scale=MatchUppercase]
-
-    \setmainhangulfont{Noto~Serif~CJK~KR}[
-      FakeSlant = 0.2,
+    \setmonofont{Inconsolatazi4}[
+      Extension = .otf,
       UprightFont = *-Regular,
       BoldFont = *-Bold,
+      Scale = 0.92,
+      AutoFakeSlant = 0.2,
     ]
-    \setsanshangulfont[BoldFont={*~Bold}]{KoPubWorldDotum_Pro}
-    \setmonohangulfont{D2Coding}
 
-    % Get double angle brackets (\llangle and \rrangle)
-    \makeatletter
-    \DeclareFontFamily{OMX}{MnSymbolE}{}
-    \DeclareSymbolFont{MnLargeSymbols}{OMX}{MnSymbolE}{m}{n}
-    \SetSymbolFont{MnLargeSymbols}{bold}{OMX}{MnSymbolE}{b}{n}
-    \DeclareFontShape{OMX}{MnSymbolE}{m}{n}{
-        <-6>  MnSymbolE5
-    <6-7>  MnSymbolE6
-    <7-8>  MnSymbolE7
-    <8-9>  MnSymbolE8
-    <9-10> MnSymbolE9
-    <10-12> MnSymbolE10
-    <12->   MnSymbolE12
-    }{}
-    \DeclareFontShape{OMX}{MnSymbolE}{b}{n}{
-        <-6>  MnSymbolE-Bold5
-    <6-7>  MnSymbolE-Bold6
-    <7-8>  MnSymbolE-Bold7
-    <8-9>  MnSymbolE-Bold8
-    <9-10> MnSymbolE-Bold9
-    <10-12> MnSymbolE-Bold10
-    <12->   MnSymbolE-Bold12
-    }{}
-
-    \let\llangle\@undefined
-    \let\rrangle\@undefined
-    \DeclareMathDelimiter{\llangle}{\mathopen}%
-                        {MnLargeSymbols}{'164}{MnLargeSymbols}{'164}
-    \DeclareMathDelimiter{\rrangle}{\mathclose}%
-                        {MnLargeSymbols}{'171}{MnLargeSymbols}{'171}
-    \makeatother
-
-    \RequirePackage{newunicodechar}
-    \newfontfamily{\fallbackfonta}{EB~Garamond}
-    \newfontfamily{\fallbackfontb}{JuliaMono}
-    \DeclareTextFontCommand{\textfallbacka}{\fallbackfonta}
-    \DeclareTextFontCommand{\textfallbackb}{\fallbackfontb}
-    \newunicodechar{⩴}{\textfallbacka{⩴}}
+    \bool_if:NF \l_simplesnt_no_fonts_bool
+      {
+        \setmainhangulfont{Noto~Serif~CJK~KR}[
+          FakeSlant = 0.2,
+          UprightFont = *-Regular,
+          BoldFont = *-Bold,
+        ]
+        \setsanshangulfont[BoldFont={*~Bold}]{KoPubWorldDotum_Pro}
+        \setmonohangulfont{D2Coding}
+      }
+  }
+  {
+    \RequirePackage[libertine]{newtxmath}
+    \RequirePackage{inconsolata}
   }
 
 

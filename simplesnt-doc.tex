@@ -1,8 +1,10 @@
 \documentclass{simplesnt}
 
 %% Helpful packages
-\usepackage{simplebnf}[2022/05/08]
-\RenewDocumentCommand{\SimpleBNFDefEq}{}{\ensuremath{⩴}}
+\usepackage{simplebnf}[2023/11/25]
+
+\usepackage{listings}
+\lstset{basicstyle = \small\ttfamily, breaklines}
 
 \usepackage{tabularray}
 \UseTblrLibrary{booktabs}
@@ -11,6 +13,10 @@
 \usepackage{kotex-logo}
 
 \newcommand*{\presentfont}[1]{{\fontspec{#1}#1}}
+\ExplSyntaxOn
+\bool_if:nF { \sys_if_engine_xetex_p: || \sys_if_engine_luatex_p: }
+  { \newcommand*{\fontspec}[1]{} }
+\ExplSyntaxOff
 
 \title{\texttt{simpleSnT}}
 \subtitle{A simple package to create show and tell slides}
@@ -29,8 +35,7 @@
 \begin{frame}[c]
   \frametitle{\TeX\ Engine}
 
-  You are expected to use \XeLaTeX\ to use this class.\footnote{Tectonic is supported as well.}
-  Use of other engines is not officially supported.
+  You are expected to use \XeLaTeX{}\footnote{Tectonic is supported as well.} or \LuaLaTeX{} to use this class, but pdf\LaTeX{} can be used as well with some limitations.
 
   \koTeX\ encourages the use of modern \TeX\ engines, and \XeLaTeX\ is considered the de-facto standard for Korean \TeX\ users.\footnote{http://wiki.ktug.org/wiki/wiki.php/ModernLaTeX}
 \end{frame}
@@ -38,35 +43,28 @@
 
 \begin{frame}[c]
   \frametitle{Fonts}
-  Basically, the following fonts are required:
+  The following Korean fonts are required outside of the fonts included in the \TeX{}Live distribution:
   {\footnotesize
   \begin{itemize}
     \item \presentfont{Noto Serif CJK KR},
-    \item {\fontspec{KoPubWorldDotum_Pro}KoPubWorldDotum\_Pro},
-    \item \presentfont{D2Coding},
-    \item \presentfont{Libertinus Serif},
-    \item \presentfont{Libertinus Sans},
-    \item \presentfont{JuliaMono},
-    \item \presentfont{Libertinus Math},
-    \item \presentfont{TeX Gyre Pagella Math}, and
-    \item \presentfont{Asana Math}.
+    \item {\fontspec{KoPubWorldDotum_Pro}KoPubWorldDotum\_Pro}, and
+    \item \presentfont{D2Coding}.
   \end{itemize}
   }
-  You probably have most of them installed already with your local \TeX\ distribution.
-  However, if you pass \texttt{no-fonts} option to the class, i.e., \texttt{\textbackslash documentclass[no-fonts]\{simplesnt\}}, the class will not load any fonts.
+  If you pass \texttt{no-fonts} option to the class, i.e., \texttt{\textbackslash documentclass[no-fonts]\{simplesnt\}}, the class will not load custom Korean fonts.
 \end{frame}
 
 
 \begin{frame}[c, fragile]
   \frametitle{Usage}
 
-  Use \XeLaTeX:
-\begin{verbatim}
+  Using \XeLaTeX:
+\begin{lstlisting}
 # Run at least three times to get all the cross references correct
 xelatex doc.tex
 xelatex doc.tex
 xelatex doc.tex
-\end{verbatim}
+\end{lstlisting}
 
   The above is just an example; You are free to use other build tools based on \texttt{latexmk}, GNU Make, Tectonic, etc.
 \end{frame}
@@ -78,29 +76,29 @@ xelatex doc.tex
   \frametitle{Backus-Naur Forms}
 
   Use \texttt{simplebnf}, e.g.,
-\begin{verbatim}
-\usepackage{simplebnf}[2022/05/08]
-\RenewDocumentCommand{\SimpleBNFDefEq}{}{\ensuremath{⩴}}
-\end{verbatim}
-
-  \begin{bnfgrammar}[rrclr]
+\begin{lstlisting}
+\usepackage{simplebnf}[2023/05/08]
+\end{lstlisting}
+\begin{center}
+  \begin{bnf}[rrclr]
     $e$ : Expression ::=
       $n$ : number
     | $x$ : variable
     | $e$; $e$ : sequence
     | $e \oplus e$ : binary op
     | $e\ e$ : application
-  \end{bnfgrammar}
+  \end{bnf}
+\end{center}
 \end{frame}
 
 \begin{frame}[c, fragile]
   \frametitle{Tables}
 
   Use \texttt{tabularray}, e.g.,
-\begin{verbatim}
+\begin{lstlisting}
 \usepackage{tabularray}
 \UseTblrLibrary{booktabs}
-\end{verbatim}
+\end{lstlisting}
 
   \begin{center}
     \begin{tblr}{ccc}
